@@ -54,6 +54,7 @@ import (
 	"sigs.k8s.io/external-dns/provider/transip"
 	"sigs.k8s.io/external-dns/provider/vinyldns"
 	"sigs.k8s.io/external-dns/provider/vultr"
+	"sigs.k8s.io/external-dns/provider/shaman"
 
 	"sigs.k8s.io/external-dns/controller"
 	"sigs.k8s.io/external-dns/endpoint"
@@ -285,6 +286,8 @@ func main() {
 		)
 	case "transip":
 		p, err = transip.NewTransIPProvider(cfg.TransIPAccountName, cfg.TransIPPrivateKeyFile, domainFilter, cfg.DryRun)
+    case "shaman":
+		p, err = shaman.NewShamanProvider(domainFilter, cfg.DryRun)
 	default:
 		log.Fatalf("unknown dns provider: %s", cfg.Provider)
 	}

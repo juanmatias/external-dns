@@ -243,6 +243,13 @@ func BuildWithConfig(source string, p ClientGenerator, cfg *Config) (Source, err
 			token = restConfig.BearerToken
 		}
 		return NewRouteGroupSource(cfg.RequestTimeout, token, tokenPath, master, cfg.Namespace, cfg.AnnotationFilter, cfg.FQDNTemplate, cfg.SkipperRouteGroupVersion, cfg.CombineFQDNAndAnnotation, cfg.IgnoreHostnameAnnotation)
+    case "sourcefile":
+        fileName := os.Getenv("SOURCE_FILE_NAME")
+        FQDNTemplate := os.Getenv("SOURCE_FILE_FQDN")
+        if FQDNTemplate == "" {
+            FQDNTemplate = "local"
+        }
+        return NewFileSource(FQDNTemplate, fileName)
 	}
 	return nil, ErrSourceNotFound
 }
